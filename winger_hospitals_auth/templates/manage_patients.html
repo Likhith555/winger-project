@@ -1,0 +1,67 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manage_style.css') }}">
+</head>
+
+<div class="container">
+    <h2>Manage Patients</h2>
+
+    <!-- Add New Patient Form -->
+    <form method="POST" action="{{ url_for('manage_patients') }}">
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Patient Name" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="mobile" placeholder="Mobile Number" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="blood_group" placeholder="Blood Group" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">➕ Add Patient</button>
+    </form>
+
+    <h3>Registered Patients</h3>
+    {% if patients %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Blood Group</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Assigned Doctor</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.blood_group }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.mobile }}</td>
+                    <td>
+                        {% if patient.consultations and patient.consultations[0].doctor %}
+                            {{ patient.consultations[0].doctor.name }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('remove_patient', patient_id=patient.id) }}">
+                            <button type="submit" class="btn btn-danger">❌ Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No patients available.</p>
+    {% endif %}
+
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">⬅ Back to Dashboard</a>
+</div>

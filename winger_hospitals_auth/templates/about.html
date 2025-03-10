@@ -1,0 +1,29 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="container">
+    <h2>About Us - Winger Hospitals</h2>
+    <p>Welcome to <strong>Winger Hospitals</strong>, a cutting-edge Hospital Management System designed to streamline healthcare services with AI-powered diagnostics, efficient patient management, and seamless doctor-patient interactions.</p>
+
+    <h3>🌟 Our Mission</h3>
+    <p>We aim to bridge the gap between patients and healthcare providers through AI-powered diagnosis, seamless doctor-patient communication, and efficient hospital administration.</p>
+
+    <h3>🚀 Key Features</h3>
+    
+        <li><strong>AI Disease Prediction</strong> – Instant preliminary health insights.</li>
+        <li><strong>Online Consultation Requests</strong> – Easy doctor bookings.</li>
+        <li><strong>Doctor-Patient Management</strong> – Simplified record-keeping.</li>
+        <li><strong>Medical History Tracking</strong> – View past diagnoses anytime.</li>
+        <li><strong>Secure & Efficient</strong> – Patient confidentiality is our top priority.</li>
+    
+
+    <h3>📍 Contact Us</h3>
+    <p>📧 <strong>Email:</strong> support@wingerhospitals.com</p>
+    <p>📍 <strong>Location:</strong> Winger HealthCare, Gubbi Cross, Bangalore-560043</p>
+    <p>📞 <strong>Helpline:</strong> +91 9035261715</p>
+    <p>🚀 Your health, our priority! Experience a smarter, faster, and more efficient healthcare system with Winger Hospitals!</p>
+
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">🏠 Back to Dashboard</a>
+</div>

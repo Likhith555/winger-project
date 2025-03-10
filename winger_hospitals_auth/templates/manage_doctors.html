@@ -1,0 +1,58 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manage_style.css') }}">
+</head>
+
+<div class="container">
+    <h2>Manage Doctors</h2>
+
+    <form method="POST" action="{{ url_for('manage_doctors') }}">
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Doctor Name" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="mobile" placeholder="Mobile Number" required class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="specialization" placeholder="Specialization" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">➕ Add Doctor</button>
+    </form>
+
+    <h3>Registered Doctors</h3>
+    {% if doctors %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor.name }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                    <td>{{ doctor.email }}</td>
+                    <td>{{ doctor.mobile }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('remove_doctor', doctor_id=doctor.id) }}">
+                            <button type="submit" class="btn btn-danger">❌ Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No doctors available.</p>
+    {% endif %}
+
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">⬅ Back to Dashboard</a>
+</div>

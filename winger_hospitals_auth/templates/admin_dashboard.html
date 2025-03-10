@@ -1,0 +1,84 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='manage_style.css') }}">
+</head>
+
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <!-- Links to Manage Doctors & Patients -->
+    <a href="{{ url_for('manage_doctors') }}" class="btn btn-primary">👨‍⚕️ Manage Doctors</a>
+    <a href="{{ url_for('manage_patients') }}" class="btn btn-secondary">🧑‍⚕️ Manage Patients</a>
+  
+
+    <h3>Pending Consultation Requests</h3>
+    {% if consultations %}
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Disease Info</th>
+                    <th>Status</th>
+                    <th>Assign Doctor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consultation in consultations %}
+                <tr>
+                    <td>{{ consultation.patient.name if consultation.patient else "Unknown Patient" }}</td>
+                    <td>{{ consultation.disease_info }}</td>
+                    <td>{{ consultation.status }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('assign_doctor') }}">
+                            <input type="hidden" name="patient_id" value="{{ consultation.patient_id }}">
+                            
+                            <select name="doctor_id" required class="form-control">
+                                {% if doctors %}
+                                    {% for doctor in doctors %}
+                                        <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    <option disabled>No doctors available</option>
+                                {% endif %}
+                            </select>
+                            
+                            <button type="submit" class="btn btn-success mt-2">Assign</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No pending consultations.</p>
+    {% endif %}
+
+    <h3>Assigned Patients & Doctors</h3>
+    {% if assigned_patients %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Disease Info</th>
+                    <th>Assigned Doctor</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consultation in assigned_patients %}
+                <tr>
+                    <td>{{ consultation.patient.name if consultation.patient else "Unknown Patient" }}</td>
+                    <td>{{ consultation.disease_info }}</td>
+                    <td>{{ consultation.doctor.name if consultation.doctor else "No Doctor Assigned" }}</td>
+                    <td>{{ consultation.status }}</td>
+                    <td>
+                        <a href="{{ url_for('medical_history', patient_id=consultation.patient.id) }}" class="btn btn-info">📖 View Medical History</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No patients have been assigned a doctor yet.</p>
+    {% endif %}
+</div>

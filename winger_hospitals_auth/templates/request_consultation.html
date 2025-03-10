@@ -1,0 +1,18 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="container">
+    <h2>Request a Consultation</h2>
+
+    <form method="POST" action="{{ url_for('request_consultation') }}">
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" name="mobile" placeholder="Enter your mobile number" required>
+
+        <label for="disease">Disease / Symptoms:</label>
+        <textarea name="disease" placeholder="Describe your symptoms or suspected disease" required></textarea>
+
+        <button type="submit" class="btn btn-primary">Submit Consultation Request</button>
+    </form>
+</div>

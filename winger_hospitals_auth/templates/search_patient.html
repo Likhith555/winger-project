@@ -1,0 +1,13 @@
+{% include "header.html" %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="container">
+    <h2>Search Patient</h2>
+    <form method="POST" action="{{ url_for('search_patient') }}">
+        <label for="uid">Enter Patient UID:</label>
+        <input type="text" name="uid" required>
+        <button type="submit" class="btn btn-primary">🔍 Search</button>
+    </form>
+</div>
